@@ -1,1 +1,1 @@
-module.exports = 'setlup';
+export default 'setlup';
