@@ -11,6 +11,7 @@
   "author": "Mark Florian <markrian@gmail.com>",
   "license": "ISC",
   "devDependencies": {
-    "brunch": "^1.8.5"
+    "brunch": "^1.8.5",
+    "javascript-brunch": "^1.7.1"
   }
 }
