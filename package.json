@@ -13,6 +13,7 @@
   "devDependencies": {
     "babel-brunch": "^5.1.2",
     "brunch": "^1.8.5",
+    "eslint-brunch": "^1.8.1",
     "javascript-brunch": "^1.7.1"
   }
 }
