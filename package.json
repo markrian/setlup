@@ -5,7 +5,7 @@
   "main": "index.js",
   "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "npm run build && karma start karma.conf.js --single-run",
     "build": "brunch build"
   },
   "author": "Mark Florian <markrian@gmail.com>",
