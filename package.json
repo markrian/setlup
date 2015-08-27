@@ -6,7 +6,8 @@
   "private": true,
   "scripts": {
     "build": "brunch build",
-    "test_node": "mocha --compilers js:babel/register"
+    "test": "mocha --compilers js:babel/register test/unit",
+    "test-dev": "mocha --watch --reporter min --compilers js:babel/register test/unit"
   },
   "author": "Mark Florian <markrian@gmail.com>",
   "license": "ISC",

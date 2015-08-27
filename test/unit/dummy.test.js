@@ -1,5 +1,5 @@
 import assert from 'assert';
-import Example from '../app/app';
+import Example from '../../app/app';
 
 describe('dummy', () => {
   it('works at all', () => {
