@@ -1,23 +1,24 @@
-describe('dummy', function () {
-  var Example = require('app');
+import assert from 'assert';
+import Example from '../app/app';
 
-  it('works at all', function () {
-    expect(true).toBe(true);
+describe('dummy', () => {
+  it('works at all', () => {
+    assert.equal(true, true);
   });
 
-  it('works at all', function () {
-    expect(1).toBe(1);
+  it('works at all', () => {
+    assert.strictEqual(1, 1);
   });
 
-  it('imports as I expect it to', function () {
+  it('imports as I expect it to', () => {
     var example = new Example();
     var value = {};
-    expect(example.run(value)).toBe(value);
+    assert.strictEqual(example.run(value), value);
   });
 
-  it('imports as I expect it to', function () {
+  it('imports as I expect it to', () => {
     var example = new Example();
-    expect(example.add(1, 2)).toBe(3);
+    assert.equal(example.add(1, 2), 3);
   });
 
 });

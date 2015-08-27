@@ -6,11 +6,13 @@
   "private": true,
   "scripts": {
     "test": "npm run build && karma start karma.conf.js --single-run",
-    "build": "brunch build"
+    "build": "brunch build",
+    "test_node": "mocha --compilers js:babel/register"
   },
   "author": "Mark Florian <markrian@gmail.com>",
   "license": "ISC",
   "devDependencies": {
+    "babel": "^5.8.21",
     "babel-brunch": "^5.1.2",
     "brunch": "^1.8.5",
     "eslint-brunch": "^1.8.1",
@@ -19,6 +21,7 @@
     "karma": "^0.13.9",
     "karma-jasmine": "^0.3.6",
     "karma-phantomjs-launcher": "^0.2.1",
+    "mocha": "^2.2.5",
     "phantomjs": "^1.9.18"
   }
 }
