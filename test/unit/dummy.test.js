@@ -1,7 +1,9 @@
 import chai from 'chai';
-import Example from '../../app/app';
-
 let expect = chai.expect
+
+import Example from '../../app/app';
+import { integers } from '../../app/app';
+
 
 describe('dummy', () => {
   it('works at all', () => {
@@ -21,6 +23,20 @@ describe('dummy', () => {
   it('imports as I expect it to', () => {
     var example = new Example();
     expect(example.add(1, 2)).to.equal(3);
+  });
+
+  it('imports as I expect it to', () => {
+    var example = new Example();
+    expect(example.args()).to.deep.equal([1,'test',[]]);
+  });
+
+  it('imports as I expect it to', () => {
+    let values = [];
+    let expected = [0,1,2,3,4]
+    for (let i of integers(5)) {
+      values.push(i);
+    }
+    expect(values).to.deep.equal(expected);
   });
 
 });
