@@ -1,5 +1,5 @@
 import chai from 'chai';
-let assert = chai.assert
+import assert from 'assert';
 
 import Transactions from '../../app/transactions';
 
@@ -7,12 +7,12 @@ import Transactions from '../../app/transactions';
 describe('Transactions', () => {
 
   it('exists', () => {
-    assert.ok(Transactions);
+    assert(Transactions);
   });
 
   it('can be instantiated', () => {
     let transactions = new Transactions();
-    assert.instanceOf(transactions, Transactions);
+    assert(transactions instanceof Transactions);
   });
 
   it('has a list member', () => {

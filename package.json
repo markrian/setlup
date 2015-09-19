@@ -15,7 +15,6 @@
     "babel": "^5.8.21",
     "babel-brunch": "^5.1.2",
     "brunch": "^1.8.5",
-    "chai": "^3.2.0",
     "eslint-brunch": "^1.8.1",
     "javascript-brunch": "^1.7.1",
     "mocha": "^2.2.5"
