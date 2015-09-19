@@ -5,23 +5,17 @@ import Transactions from '../../app/transactions';
 
 
 describe('Transactions', () => {
+  let transactions;
 
-  it('exists', () => {
-    assert(Transactions);
-  });
-
-  it('can be instantiated', () => {
-    let transactions = new Transactions();
-    assert(transactions instanceof Transactions);
+  beforeEach(() => {
+    transactions = new Transactions();
   });
 
   it('has a list member', () => {
-    let transactions = new Transactions();
     assert.deepEqual(transactions.list, []);
   });
 
   it('resolves to empty list without any transactions', () => {
-    let transactions = new Transactions();
     let resolution = transactions.getResolution();
     assert.deepEqual(resolution, []);
   });
