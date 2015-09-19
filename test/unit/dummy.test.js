@@ -1,5 +1,5 @@
 import chai from 'chai';
-let expect = chai.expect
+let assert = chai.assert
 
 import Example from '../../app/app';
 import { integers } from '../../app/app';
@@ -7,27 +7,23 @@ import { integers } from '../../app/app';
 
 describe('dummy', () => {
   it('works at all', () => {
-    expect(true).to.be.true;
-  });
-
-  it('works at all', () => {
-    expect(1).to.equal(1);
+    assert.strictEqual(true, true);
   });
 
   it('imports as I expect it to', () => {
     var example = new Example();
     var value = {};
-    expect(example.run(value)).to.equal(value);
+    assert.strictEqual(example.run(value), value);
   });
 
   it('imports as I expect it to', () => {
     var example = new Example();
-    expect(example.add(1, 2)).to.equal(3);
+    assert.strictEqual(example.add(1, 2), 3);
   });
 
   it('imports as I expect it to', () => {
     var example = new Example();
-    expect(example.args()).to.deep.equal([1,'test',[]]);
+    assert.deepEqual(example.args(), [1,'test',[]]);
   });
 
   it('imports as I expect it to', () => {
@@ -36,7 +32,7 @@ describe('dummy', () => {
     for (let i of integers(5)) {
       values.push(i);
     }
-    expect(values).to.deep.equal(expected);
+    assert.deepEqual(values, expected);
   });
 
 });
