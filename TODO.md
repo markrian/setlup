@@ -12,6 +12,8 @@ TODO
 Thoughts
 --------
 
+So, webpack is pretty awesome. May well end up using that.
+
 Brunch is a little bit inflexible. What do I *really* want:
 - es6
 - testing

@@ -1,7 +1,6 @@
-import chai from 'chai';
 import assert from 'assert';
 
-import Transactions from '../../app/transactions';
+import Transactions from '../../src/transactions';
 
 
 describe('Transactions', () => {
