@@ -65,11 +65,11 @@ describe('Transactions', function () {
 
     assert.deepEqual(
       transactions.getResolution(),
-      {
+      [{
         creditor: 'bar',
         amount: 1234.56 / 2,
         debtors: 'foo',
-      }
+      }]
     );
   });
 
