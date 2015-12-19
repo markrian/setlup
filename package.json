@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "test": "mocha --compilers js:babel/register test/unit",
-    "test-dev": "mocha --watch --reporter min --compilers js:babel/register test/unit"
+    "tdd": "mocha --watch --reporter min --compilers js:babel/register test/unit"
   },
   "author": "Mark Florian <markrian@gmail.com>",
   "license": "ISC",
