@@ -20,16 +20,19 @@ class Transactions {
     }
 
     getResolution() {
-        let balances = this.getBalances(this.list);
+        let balances = this.getBalances();
         let balancesList = [];
         for (let person in balances) {
-            balancesList.push({ name: person, balance: balances[person].balance });
+            balancesList.push({ name: person, balance: balances[person] });
         }
         balancesList.sort((a, b) => {
             return b.balance - a.balance;
         });
 
-        var resolvingTransactions = [];
+        let resolvingTransactions = [];
+        balancesList.forEach(item => {
+
+        });
         return resolvingTransactions;
     }
 
