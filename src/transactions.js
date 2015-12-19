@@ -27,6 +27,7 @@ class Transactions {
     });
 
     var resolvingTransactions = [];
+    return resolvingTransactions;
   }
 
   _getBalances(transactions) {
