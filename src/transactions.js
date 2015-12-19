@@ -1,3 +1,6 @@
+import _ from 'lodash';
+
+
 class Transactions {
 
   constructor() {
@@ -5,7 +8,7 @@ class Transactions {
   }
 
   add(...transactions) {
-    this.list.push(...transactions);
+    this.list.push(..._.cloneDeep(transactions));
   }
 
   getPeople() {
@@ -13,11 +16,11 @@ class Transactions {
     this.list.forEach((transaction) => {
       people.push(transaction.creditor, ...transaction.debtors);
     })
-    return new Set(people);
+    return _.unique(people);
   }
 
   getResolution() {
-    let balances = this._getBalances(this.list);
+    let balances = this.getBalances(this.list);
     let balancesList = [];
     for (let person in balances) {
       balancesList.push({ name: person, balance: balances[person].balance });
@@ -30,7 +33,7 @@ class Transactions {
     return resolvingTransactions;
   }
 
-  _getBalances(transactions) {
+  getBalances(transactions) {
     let balances = {};
     transactions.forEach((transaction) => {
       if (!balances[transaction.creditor]) {

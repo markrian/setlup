@@ -1,4 +1,7 @@
-import assert from 'assert';
+import { assert } from 'chai';
+import _ from 'lodash';
+
+import chance from '../support/chance';
 
 import Transactions from '../../src/transactions';
 
@@ -16,39 +19,38 @@ describe('Transactions', function () {
   });
 
   it('can add transactions which show up in the list member', function () {
-    let transaction = {
-      creditor: 'foo',
-      amount: 1234.56,
-      debtors: ['foo', 'bar'],
-    };
+    let transaction = makeTransaction();
     transactions.add(transaction);
+
     assert.deepEqual(transactions.list, [transaction]);
 
-    let transactions_ = [{
-      creditor: 'foo',
-      amount: 1234.56,
-      debtors: ['biz', 'bar'],
-    }, {
-      creditor: 'baz',
-      amount: 1,
-      debtors: ['bar', 'foo']
-    }];
-    transactions.add(...transactions_);
-    assert.deepEqual(transactions.list, [transaction, ...transactions_]);
+    let moreTransactions = repeat(makeTransaction, 2);
+    transactions.add(...moreTransactions);
+
+    assert.deepEqual(transactions.list, [transaction, ...moreTransactions]);
+  });
+
+  it('makes copies of added transactions', function () {
+      let transaction = makeTransaction();
+      transactions.add(transaction);
+
+      let transactionInList = transactions.list[0];
+      assert.deepEqual(transactionInList, transaction);
+      assert.notStrictEqual(transactionInList, transaction);
   });
 
   it('can list the people involved in all transactions', function () {
-    let transactions_ = [{
-      creditor: 'foo',
-      amount: 1234.56,
-      debtors: ['foo', 'bar'],
-    }, {
-      creditor: 'baz',
-      amount: 1,
-      debtors: ['bar', 'foo']
-    }];
-    transactions.add(...transactions_);
-    assert.deepEqual(['foo', 'bar', 'baz'], [...transactions.getPeople()]);
+    let someTransactions = repeat(makeTransaction, 2);
+    transactions.add(...someTransactions);
+    let actual = _.unique(transactions.getPeople().sort());
+    let expected = _.unique([
+        someTransactions[0].creditor,
+        someTransactions[1].creditor,
+        ...someTransactions[0].debtors,
+        ...someTransactions[1].debtors,
+    ].sort())
+
+    assert.deepEqual(actual, expected);
   });
 
   it('resolves to empty list without any transactions', function () {
@@ -57,21 +59,30 @@ describe('Transactions', function () {
   });
 
   it('resolves one transaction to its inverse', function () {
-    let transaction = {
-      creditor: 'foo',
-      amount: 1234.56,
-      debtors: ['foo', 'bar'],
-    };
+    let transaction = makeTransaction();
     transactions.add(transaction);
 
-    assert.deepEqual(
-      transactions.getResolution(),
-      [{
-        creditor: 'bar',
-        amount: 1234.56 / 2,
-        debtors: 'foo',
-      }]
-    );
+    assert.deepEqual(transactions.getResolution(), transaction);
   });
 
 });
+
+function makeTransaction() {
+    let debtors = new Set(repeat(
+        chance.first.bind(chance),
+        chance.integer({ min: 1, max: 10})
+    ));
+    return {
+        creditor: chance.first(),
+        amount: chance.floating({ min: 0.1, max: 1000 }),
+        debtors: debtors,
+    };
+}
+
+function repeat(fn, n) {
+    let result = [];
+    while (n--) {
+        result.push(fn());
+    }
+    return result;
+}

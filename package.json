@@ -12,6 +12,11 @@
   "license": "ISC",
   "devDependencies": {
     "babel": "^5.8.21",
+    "chai": "^3.4.1",
+    "chance": "~0.8.0",
     "mocha": "^2.2.5"
+  },
+  "dependencies": {
+    "lodash": "^3.10.1"
   }
 }
