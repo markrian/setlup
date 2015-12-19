@@ -89,19 +89,50 @@ describe('Transactions', function () {
         assert.equal(people.length, Object.keys(balances).length);
     });
 
-    it.skip('resolves one transaction to its inverse', function () {
-        let transaction = makeTransaction();
+    it('resolves one transaction to its inverse', function () {
+        let transaction = makeTransaction({numDebtors: 1});
         transactions.add(transaction);
+        var inverseTransaction = {
+            creditor: transaction.debtors[0],
+            amount: transaction.amount,
+            debtors: [transaction.creditor],
+        };
 
-        assert.deepEqual(transactions.getResolution(), transaction);
+        assert.deepEqual(transactions.getResolution(), [inverseTransaction]);
+    });
+
+    it('returns the minimal resolution', function () {
+        let chainOfTransactions = [
+            { creditor: 'a', amount: 1, debtors: ['b'] },
+            { creditor: 'b', amount: 1, debtors: ['c'] },
+            { creditor: 'c', amount: 1, debtors: ['d'] },
+        ];
+        transactions.add(...chainOfTransactions);
+
+        assert.deepEqual(transactions.getResolution(), [{
+            creditor: 'c', amount: 1, debtors: ['a']
+        }]);
+    });
+
+    it('returns an empty resolution if all transactions are balanced', function () {
+        let balancedTransactions = [
+            { creditor: 'a', amount: 1, debtors: ['b'] },
+            { creditor: 'b', amount: 1, debtors: ['c'] },
+            { creditor: 'c', amount: 1, debtors: ['a'] },
+        ];
+        transactions.add(...balancedTransactions);
+
+        assert.deepEqual(transactions.getResolution(), []);
     });
 
 });
 
-function makeTransaction() {
+function makeTransaction(options = {}) {
+    let min = options.numDebtors || 1;
+    let max = options.numDebtors || 10;
     let debtors = _.unique(repeat(
         chance.first.bind(chance),
-        chance.integer({ min: 1, max: 10 })
+        chance.integer({ min, max })
     ));
     return {
         creditor: chance.first(),
