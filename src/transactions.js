@@ -21,18 +21,23 @@ class Transactions {
 
     getResolution() {
         let balances = this.getBalances();
-        let balancesList = [];
+        let debtors = [];
+        let creditors = [];
         for (let person in balances) {
-            balancesList.push({ name: person, balance: balances[person] });
+            if (balances[person] > 0) {
+                debtors.push({ name: person, balance: balances[person] });
+            } else if (balances[person] < 0) {
+                creditors.push({ name: person, balance: balances[person] });
+            }
         }
-        balancesList.sort((a, b) => {
-            return b.balance - a.balance;
-        });
+        creditors.sort(absoluteBalance);
+        debtors.sort(absoluteBalance);
+
+        function absoluteBalance(a, b) {
+            return Math.abs(b.balance) - Math.abs(a.balance);
+        }
 
         let resolvingTransactions = [];
-        balancesList.forEach(item => {
-
-        });
         return resolvingTransactions;
     }
 
