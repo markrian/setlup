@@ -58,6 +58,37 @@ describe('Transactions', function () {
         assert.deepEqual(resolution, []);
     });
 
+    it('can return the balances of each person', function () {
+        let transaction = makeTransaction();
+        // use the same tx twice to make calculating expected result easier
+        transactions.add(transaction, transaction);
+        let balances = transactions.getBalances();
+        let expectedCreditorBalance = -transaction.amount * 2;
+
+        assert.strictEqual(balances[transaction.creditor], expectedCreditorBalance);
+
+        let people = transactions.getPeople();
+        let onlyDebtors = people.filter(person => person !== transaction.creditor);
+        let expectedDebt = transaction.amount / onlyDebtors.length * 2;
+
+        onlyDebtors.forEach((debtor, i, debtors) => {
+            assert.strictEqual(
+                balances[debtor], expectedDebt,
+                `"${debtor}" expected to have balance of ${expectedDebt},
+                but has ${balances[debtor]}. Transactions:
+                ${JSON.stringify(transactions.list, null, 2)}`);
+        });
+    });
+
+    it('should return the same number of balances as there are people', function () {
+        let transaction = makeTransaction();
+        transactions.add(transaction);
+        let people = transactions.getPeople();
+        let balances = transactions.getBalances();
+
+        assert.equal(people.length, Object.keys(balances).length);
+    });
+
     it.skip('resolves one transaction to its inverse', function () {
         let transaction = makeTransaction();
         transactions.add(transaction);
@@ -68,9 +99,9 @@ describe('Transactions', function () {
 });
 
 function makeTransaction() {
-    let debtors = new Set(repeat(
+    let debtors = _.unique(repeat(
         chance.first.bind(chance),
-        chance.integer({ min: 1, max: 10})
+        chance.integer({ min: 1, max: 10 })
     ));
     return {
         creditor: chance.first(),

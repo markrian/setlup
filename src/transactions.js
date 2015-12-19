@@ -13,7 +13,7 @@ class Transactions {
 
     getPeople() {
         let people = [];
-        this.list.forEach((transaction) => {
+        this.list.forEach(transaction => {
             people.push(transaction.creditor, ...transaction.debtors);
         })
         return _.unique(people);
@@ -33,26 +33,22 @@ class Transactions {
         return resolvingTransactions;
     }
 
-    getBalances(transactions) {
+    getBalances() {
         let balances = {};
-        transactions.forEach((transaction) => {
+        this.list.forEach(transaction => {
             if (!balances[transaction.creditor]) {
-                balances[transaction.creditor] = {
-                    balance: -transaction.amount,
-                };
+                balances[transaction.creditor] = -transaction.amount;
             } else {
-                balances[transaction.creditor].balance += transaction.amount;
+                balances[transaction.creditor] -= transaction.amount;
             }
 
             let numDebtors = transaction.debtors.length;
-            transaction.debtors.forEach((debtor) => {
+            transaction.debtors.forEach(debtor => {
                 let partialAmount = transaction.amount / numDebtors;
                 if (!balances[debtor]) {
-                    balances[debtor] = {
-                        balance: partialAmount,
-                    }
+                    balances[debtor] = partialAmount;
                 } else {
-                    balances[debtor].balance += partialAmount;
+                    balances[debtor] += partialAmount;
                 }
             });
         });
@@ -63,4 +59,4 @@ class Transactions {
 }
 
 
-export { Transactions as default }
+export default Transactions;
