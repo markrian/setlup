@@ -11,7 +11,8 @@ describe('Transactions', function () {
   });
 
   it('has a list member', function () {
-    assert.deepEqual(transactions.list, []);
+    assert(Array.isArray(transactions.list));
+    assert.strictEqual(transactions.list.length, 0);
   });
 
   it('can add transactions which show up in the list member', function () {
