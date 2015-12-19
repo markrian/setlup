@@ -8,6 +8,10 @@ TODO
 / write a dummy test
 / set up karma, or equivalent
 - start writing setlup code via TDD
+- use old trip-expenses for actual logic
+    - split up into modules, if appropriate
+    - write tests for each module
+    - write tests for wrapper I'll write
 
 Thoughts
 --------
