@@ -7,63 +7,63 @@ import Transactions from '../../src/transactions';
 
 
 describe('Transactions', function () {
-  let transactions;
+    let transactions;
 
-  beforeEach(function () {
-    transactions = new Transactions();
-  });
+    beforeEach(function () {
+        transactions = new Transactions();
+    });
 
-  it('has a list member', function () {
-    assert(Array.isArray(transactions.list));
-    assert.strictEqual(transactions.list.length, 0);
-  });
+    it('has a list member', function () {
+        assert(Array.isArray(transactions.list));
+        assert.strictEqual(transactions.list.length, 0);
+    });
 
-  it('can add transactions which show up in the list member', function () {
-    let transaction = makeTransaction();
-    transactions.add(transaction);
+    it('can add transactions which show up in the list member', function () {
+        let transaction = makeTransaction();
+        transactions.add(transaction);
 
-    assert.deepEqual(transactions.list, [transaction]);
+        assert.deepEqual(transactions.list, [transaction]);
 
-    let moreTransactions = repeat(makeTransaction, 2);
-    transactions.add(...moreTransactions);
+        let moreTransactions = repeat(makeTransaction, 2);
+        transactions.add(...moreTransactions);
 
-    assert.deepEqual(transactions.list, [transaction, ...moreTransactions]);
-  });
+        assert.deepEqual(transactions.list, [transaction, ...moreTransactions]);
+    });
 
-  it('makes copies of added transactions', function () {
-      let transaction = makeTransaction();
-      transactions.add(transaction);
+    it('makes copies of added transactions', function () {
+        let transaction = makeTransaction();
+        transactions.add(transaction);
 
-      let transactionInList = transactions.list[0];
-      assert.deepEqual(transactionInList, transaction);
-      assert.notStrictEqual(transactionInList, transaction);
-  });
+        let transactionInList = transactions.list[0];
+        assert.deepEqual(transactionInList, transaction);
+        assert.notStrictEqual(transactionInList, transaction);
+    });
 
-  it('can list the people involved in all transactions', function () {
-    let someTransactions = repeat(makeTransaction, 2);
-    transactions.add(...someTransactions);
-    let actual = _.unique(transactions.getPeople().sort());
-    let expected = _.unique([
-        someTransactions[0].creditor,
-        someTransactions[1].creditor,
-        ...someTransactions[0].debtors,
-        ...someTransactions[1].debtors,
-    ].sort())
+    it('can list the people involved in all transactions', function () {
+        let someTransactions = repeat(makeTransaction, 2);
+        transactions.add(...someTransactions);
+        let actual = _.unique(transactions.getPeople().sort());
+        let expected = _.unique([
+            someTransactions[0].creditor,
+            someTransactions[1].creditor,
+            ...someTransactions[0].debtors,
+            ...someTransactions[1].debtors,
+        ].sort())
 
-    assert.deepEqual(actual, expected);
-  });
+        assert.deepEqual(actual, expected);
+    });
 
-  it('resolves to empty list without any transactions', function () {
-    let resolution = transactions.getResolution();
-    assert.deepEqual(resolution, []);
-  });
+    it('resolves to empty list without any transactions', function () {
+        let resolution = transactions.getResolution();
+        assert.deepEqual(resolution, []);
+    });
 
-  it.skip('resolves one transaction to its inverse', function () {
-    let transaction = makeTransaction();
-    transactions.add(transaction);
+    it.skip('resolves one transaction to its inverse', function () {
+        let transaction = makeTransaction();
+        transactions.add(transaction);
 
-    assert.deepEqual(transactions.getResolution(), transaction);
-  });
+        assert.deepEqual(transactions.getResolution(), transaction);
+    });
 
 });
 
