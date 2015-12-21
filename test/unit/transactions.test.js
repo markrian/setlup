@@ -127,11 +127,10 @@ describe('Transactions', function () {
         assert.isBelow(numResolvingTransactions, numPeople);
     });
 
-    // FIXME: Sometimes fails due to rounding errors!
     describe('when applying the resolution', function () {
         it('should make a new resolution empty', function () {
-            let someTransactions = repeat(makeTransaction, 1);
-            transactions.add(...someTransactions);
+            let transaction = transactionFromTuple('a', 10, ['a', 'b', 'c']);
+            transactions.add(transaction);
             let resolution = transactions.getResolution();
             transactions.add(...resolution);
 
