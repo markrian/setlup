@@ -85,8 +85,8 @@ describe('Transactions', function () {
         let balances = transactions.getBalances();
 
         let balancesList = Object.keys(balances).map(key => balances[key]);
-        let balancesSum = balancesList.reduce((a, b) => a + b, 0);
-        assert.closeTo(balancesSum, 0, 1e-10);
+        let balancesSum = balancesList.reduce((a, b) => a.add(b), bigRat());
+        assert.strictEqual(balancesSum.valueOf(), 0);
     });
 
     it('should return the same number of balances as there are people', function () {
