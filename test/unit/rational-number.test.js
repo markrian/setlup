@@ -39,8 +39,6 @@ describe('RationalNumber', function () {
         assertRational(r, value, 1);
     });
 
-    it('can be instantiated with a instance of RationalNumber');
-
     it('can be added to a regular number', function () {
         assert.strictEqual(new RationalNumber() + 2.3, 2.3);
     });
