@@ -51,10 +51,6 @@ class Transactions {
             return b - a;
         }
 
-        function absoluteBalanceDesc(a, b) {
-            return absoluteBalanceAsc(b, a);
-        }
-
         let resolvingTransactions = [];
         debtors.forEach(debtor => {
             while (debtor.balance > 0) {
