@@ -43,4 +43,46 @@ describe('RationalNumber', function () {
         assert.strictEqual(new RationalNumber() + 2.3, 2.3);
     });
 
+    it('has an add method which returns a new instance of the sum', function () {
+        let r = new RationalNumber(100, 16);
+        let other = new RationalNumber(1, 16);
+        let sum = r.add(other);
+
+        assertRational(sum, 101, 16);
+        assert.notStrictEqual(r, sum);
+    });
+
+    it('has a subtract method which returns a new instance of the difference', function () {
+        let r = new RationalNumber(100, 16);
+        let other = new RationalNumber(1, 16);
+        let diff = r.subtract(other);
+
+        assertRational(diff, 99, 16);
+        assert.notStrictEqual(r, diff);
+    });
+
+    it('has a multiply method which returns a new instance of the product', function () {
+        let r = new RationalNumber(100, 16);
+        let other = new RationalNumber(1, 16);
+        let product = r.multiply(other);
+
+        assertRational(product, 25, 64);
+        assert.notStrictEqual(r, product);
+    });
+
+    it('has a divide method which returns a new instance of the quotient', function () {
+        let r = new RationalNumber(100, 16);
+        let other = new RationalNumber(1, 16);
+        let quotient = r.divide(other);
+
+        assertRational(quotient, 100, 1);
+        assert.notStrictEqual(r, quotient);
+    });
+
+    function assertRational(rational, numerator, denominator) {
+        assert.strictEqual(rational.numerator, numerator);
+        assert.strictEqual(rational.denominator, denominator);
+        assert.strictEqual(rational.valueOf(), numerator / denominator);
+    }
+
 });

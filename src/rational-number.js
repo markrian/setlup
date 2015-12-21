@@ -5,6 +5,30 @@ export default class RationalNumber {
         Object.assign(this, simplified);
     }
 
+    add(other) {
+        return new RationalNumber(
+            this.numerator * other.denominator + other.numerator * this.denominator,
+            this.denominator * other.denominator);
+    }
+
+    subtract(other) {
+        return new RationalNumber(
+            this.numerator * other.denominator - other.numerator * this.denominator,
+            this.denominator * other.denominator);
+    }
+
+    multiply(other) {
+        return new RationalNumber(
+            this.numerator * other.numerator,
+            this.denominator * other.denominator);
+    }
+
+    divide(other) {
+        return new RationalNumber(
+            this.numerator * other.denominator,
+            this.denominator * other.numerator);
+    }
+
     valueOf() {
         return this.numerator / this.denominator;
     }
