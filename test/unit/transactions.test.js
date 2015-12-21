@@ -80,31 +80,14 @@ describe('Transactions', function () {
         });
     });
 
-    (function () {
-        let failed = false;
-        let count = 0;
-        while (!failed && count < 10000) {
-            count++;
-            it(`returns balances which sum to zero ${count}`, function () {
-                transactions.add(...repeat(makeTransaction, 3));
-                let balances = transactions.getBalances();
-                let pprint = a => JSON.stringify(a, null, 2);
-                let debugObj = {
-                    transactionsList: transactions.list,
-                    balances: balances,
-                };
-                let msg = `Balances should sum to zero, but don't. ${pprint(debugObj)}`;
+    it('returns balances which sum to zero', function () {
+        transactions.add(...repeat(makeTransaction, 3));
+        let balances = transactions.getBalances();
 
-                let sum = (a, b) => a + b;
-                let balancesList = Object.keys(balances).map(key => balances[key]);
-                let balancesSum = balancesList.reduce(sum, 0);
-                if (Math.abs(balancesSum) > 1e-10) {
-                    failed = true;
-                }
-                assert.closeTo(balancesSum, 0, 1e-10, msg);
-            });
-        }
-    })();
+        let balancesList = Object.keys(balances).map(key => balances[key]);
+        let balancesSum = balancesList.reduce((a, b) => a + b, 0);
+        assert.closeTo(balancesSum, 0, 1e-10);
+    });
 
     it('should return the same number of balances as there are people', function () {
         let transaction = makeTransaction();
