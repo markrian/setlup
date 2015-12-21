@@ -15,6 +15,8 @@ TODO
 - Try ascending AND descending sorts of creditors/debtors to see if there's
   a difference in resolution
 - Write RationalNumber class
+    - Write add, subtract, divide and multiply methods
+    - add \_checkType private function - must be number or RationalNumber
 
 Thoughts
 --------
