@@ -60,12 +60,12 @@ class Transactions {
                 if (Math.abs(creditor.balance) > debtor.balance) {
                     toPay = debtor.balance;
                 } else {
-                    toPay = Math.abs(creditor.balance);
+                    toPay = creditor.balance.abs();
                 }
-                debtor.balance -= toPay;
+                debtor.balance = debtor.balance.subtract(toPay);
                 resolvingTransactions.push({
                     creditor: debtor.name,
-                    amount: toPay,
+                    amount: toPay.valueOf(),
                     debtors: [creditor.name],
                 });
             }
