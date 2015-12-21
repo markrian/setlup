@@ -132,10 +132,17 @@ describe('Transactions', function () {
     });
 
     describe('when applying the resolution', function () {
-        it('should make a new resolution empty', function () {
+        it('should return an empty resolution, having not suffered rounding errors', function () {
             let transaction = transactionFromTuple('a', 10, ['a', 'b', 'c']);
             transactions.add(transaction);
             let resolution = transactions.getResolution();
+            transactions.add(...resolution);
+
+            assert.deepEqual(transactions.getResolution(), []);
+
+            let manyTransactions = repeat(makeTransaction, 50);
+            transactions.add(...manyTransactions);
+            resolution = transactions.getResolution();
             transactions.add(...resolution);
 
             assert.deepEqual(transactions.getResolution(), []);
