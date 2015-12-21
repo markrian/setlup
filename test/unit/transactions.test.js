@@ -1,7 +1,12 @@
 import { assert } from 'chai';
 import _ from 'lodash';
 
-import chance from '../support/chance';
+import {
+    randomNames,
+    makeTransaction,
+    transactionFromTuple,
+    repeat,
+} from '../support/transactions-helpers';
 
 import Transactions from '../../src/transactions';
 
@@ -135,25 +140,3 @@ describe('Transactions', function () {
     });
 
 });
-
-function makeTransaction(options = {}) {
-    let min = options.numDebtors || 1;
-    let max = options.numDebtors || 10;
-    let debtors = _.unique(repeat(
-        chance.first.bind(chance),
-        chance.integer({ min, max })
-    ));
-    return {
-        creditor: chance.first(),
-        amount: chance.floating({ min: 0.1, max: 1000 }),
-        debtors: debtors,
-    };
-}
-
-function repeat(fn, n) {
-    let result = [];
-    while (n--) {
-        result.push(fn());
-    }
-    return result;
-}
