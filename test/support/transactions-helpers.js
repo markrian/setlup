@@ -8,7 +8,12 @@ function randomNames(count = 10) {
     if (count > 10 || count < 1) {
         throw new Error(`${count} must be between 1 and 10 inclusive`);
     }
-    return chance.pick(NAMES, count);
+    let result = chance.pick(NAMES, count);
+    return count === 1 ? [result] : result;
+}
+
+function randomName() {
+    return randomNames(1)[0];
 }
 
 function makeTransaction(options = {}) {
@@ -16,7 +21,7 @@ function makeTransaction(options = {}) {
     let max = options.numDebtors || 10;
     let numDebtors = chance.integer({ min, max });
     return {
-        creditor: randomNames(1),
+        creditor: randomName(),
         amount: chance.floating({ min: 0.1, max: 1000 }),
         debtors: randomNames(numDebtors),
     };
