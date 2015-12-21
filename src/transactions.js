@@ -56,12 +56,13 @@ class Transactions {
             while (debtor.balance > 0) {
                 let creditor = _.find(creditors, c => c.balance < 0);
                 assert(creditor, 'no next creditor found; balances do not sum to zero, probably!');
-                let toPay = 0;
+                let toPay;
                 if (Math.abs(creditor.balance) > debtor.balance) {
                     toPay = debtor.balance;
                 } else {
                     toPay = creditor.balance.abs();
                 }
+                creditor.balance = creditor.balance.add(toPay);
                 debtor.balance = debtor.balance.subtract(toPay);
                 resolvingTransactions.push({
                     creditor: debtor.name,
