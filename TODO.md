@@ -14,6 +14,7 @@ TODO
     - write tests for wrapper I'll write
 - Try ascending AND descending sorts of creditors/debtors to see if there's
   a difference in resolution
+- Write RationalNumber class
 
 Thoughts
 --------
