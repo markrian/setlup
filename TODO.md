@@ -22,7 +22,7 @@ TODO
       order. Debtors can be in any order. Why? Not entirely sure.
         / Okay, the implementation was just wrong.
 / Try to identify if unsafe ints are actually being used - YUP!
-- Port over to big-rational
+/ Port over to big-rational
 - Use person ids instead of person names, to make renaming people possible
 
 Thoughts
