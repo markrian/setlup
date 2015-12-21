@@ -79,6 +79,14 @@ describe('RationalNumber', function () {
         assert.notStrictEqual(r, quotient);
     });
 
+    it('has an abs method which returns a new instance of the absolute value', function () {
+        let r = new RationalNumber(-100, 16);
+        let abs = r.abs();
+
+        assertRational(abs, 25, 4);
+        assert.notStrictEqual(r, abs);
+    });
+
     function assertRational(rational, numerator, denominator) {
         assert.strictEqual(rational.numerator, numerator);
         assert.strictEqual(rational.denominator, denominator);

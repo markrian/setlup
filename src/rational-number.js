@@ -29,6 +29,10 @@ export default class RationalNumber {
             this.denominator * other.numerator);
     }
 
+    abs() {
+        return new RationalNumber(Math.abs(this.numerator), this.denominator);
+    }
+
     valueOf() {
         return this.numerator / this.denominator;
     }

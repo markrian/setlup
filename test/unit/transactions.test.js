@@ -76,6 +76,9 @@ describe('Transactions', function () {
             'b': 5,
             'c': 25,
         };
+        for (let name in balances) {
+            balances[name] = balances[name].valueOf();
+        }
 
         assert.deepEqual(balances, expectedBalances);
     });
@@ -129,7 +132,7 @@ describe('Transactions', function () {
     });
 
     describe('when applying the resolution', function () {
-        it.skip('should make a new resolution empty', function () {
+        it('should make a new resolution empty', function () {
             let transaction = transactionFromTuple('a', 10, ['a', 'b', 'c']);
             transactions.add(transaction);
             let resolution = transactions.getResolution();

@@ -10,12 +10,7 @@ class Transactions {
     }
 
     add(...transactions) {
-        let _transactions = _.cloneDeep(transactions);
-        _transactions.forEach(transaction => {
-            if (!(transaction.amount instanceof RationalNumber)) {
-                transaction.amount = RationalNumber.fromNumber(transaction.amount);
-            }
-        });
+        let _transactions = transactions.map(normalisedTransaction);
         this.list.push(..._transactions);
     }
 
@@ -51,7 +46,9 @@ class Transactions {
         debtors.sort(absoluteBalanceAsc);
 
         function absoluteBalanceAsc(a, b) {
-            return Math.abs(b.balance) - Math.abs(a.balance);
+            a = a.balance.abs().valueOf();
+            b = b.balance.abs().valueOf();
+            return b - a;
         }
 
         function absoluteBalanceDesc(a, b) {
@@ -85,25 +82,37 @@ class Transactions {
         let balances = {};
         this.list.forEach(transaction => {
             if (!balances[transaction.creditor]) {
-                balances[transaction.creditor] = -transaction.amount;
-            } else {
-                balances[transaction.creditor] -= transaction.amount;
+                balances[transaction.creditor] = RationalNumber.fromNumber(0);
             }
+            balances[transaction.creditor] = balances[transaction.creditor]
+                .subtract(transaction.amount);
 
             let numDebtors = transaction.debtors.length;
             transaction.debtors.forEach(debtor => {
-                let partialAmount = transaction.amount / numDebtors;
+                let partialAmount = transaction.amount.divide(
+                    RationalNumber.fromNumber(numDebtors));
                 if (!balances[debtor]) {
-                    balances[debtor] = partialAmount;
-                } else {
-                    balances[debtor] += partialAmount;
+                    balances[debtor] = RationalNumber.fromNumber(0);
                 }
+                balances[debtor] = balances[debtor].add(partialAmount);
             });
         });
 
         return balances;
     }
 
+}
+
+
+function normalisedTransaction(transaction) {
+    if (transaction.amount instanceof RationalNumber) {
+        return transaction;
+    }
+
+    let amount = RationalNumber.fromNumber(transaction.amount);
+    transaction = _.cloneDeep(transaction);
+    transaction.amount = amount;
+    return transaction;
 }
 
 
