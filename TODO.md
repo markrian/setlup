@@ -17,6 +17,7 @@ TODO
 / Write RationalNumber class
     / Write add, subtract, divide and multiply methods
     / add \_checkType private function - must be number or RationalNumber
+- Port Transactions to use RationalNumber
 
 Thoughts
 --------
