@@ -1,5 +1,7 @@
 import _ from 'lodash';
 
+import RationalNumber from './rational-number';
+
 
 class Transactions {
 
@@ -8,7 +10,22 @@ class Transactions {
     }
 
     add(...transactions) {
-        this.list.push(..._.cloneDeep(transactions));
+        let _transactions = _.cloneDeep(transactions);
+        _transactions.forEach(transaction => {
+            if (!(transaction.amount instanceof RationalNumber)) {
+                transaction.amount = RationalNumber.fromNumber(transaction.amount);
+            }
+        });
+        this.list.push(..._transactions);
+    }
+
+    getPrimitiveList() {
+        return this.list.map(transaction => {
+            var primitiveAmount = transaction.amount.valueOf();
+            transaction = _.cloneDeep(transaction);
+            transaction.amount = primitiveAmount;
+            return transaction;
+        });
     }
 
     getPeople() {

@@ -28,26 +28,19 @@ describe('Transactions', function () {
         let transaction = makeTransaction();
         transactions.add(transaction);
 
-        assert.deepEqual(transactions.list, [transaction]);
+        assert.deepEqual(transactions.getPrimitiveList(), [transaction]);
 
         let moreTransactions = repeat(makeTransaction, 2);
         transactions.add(...moreTransactions);
 
-        assert.deepEqual(transactions.list, [transaction, ...moreTransactions]);
-    });
-
-    it('transforms numbers into RationalNumbers', function () {
-        let transaction = makeTransaction();
-        transactions.add(transaction);
-
-        assert(transactions.list[0].amount instanceof RationalNumber);
+        assert.deepEqual(transactions.getPrimitiveList(), [transaction, ...moreTransactions]);
     });
 
     it('makes copies of added transactions', function () {
         let transaction = makeTransaction();
         transactions.add(transaction);
 
-        let transactionInList = transactions.list[0];
+        let transactionInList = transactions.getPrimitiveList()[0];
         assert.deepEqual(transactionInList, transaction);
         assert.notStrictEqual(transactionInList, transaction);
     });
