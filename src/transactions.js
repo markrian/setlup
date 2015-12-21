@@ -55,7 +55,7 @@ class Transactions {
         debtors.forEach(debtor => {
             while (debtor.balance > 0) {
                 let creditor = _.find(creditors, c => c.balance < 0);
-                assert(creditor, 'no next creditor found; balances do not sum to zero, probably!');
+                assert(creditor, 'no next creditor found, probably due to rounding error!');
                 let toPay;
                 if (Math.abs(creditor.balance) > debtor.balance) {
                     toPay = debtor.balance;

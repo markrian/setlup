@@ -16,8 +16,13 @@ TODO
     / Write add, subtract, divide and multiply methods
     / add \_checkType private function - must be number or RationalNumber
 / Port Transactions to use RationalNumber
-- Try ascending AND descending sorts of creditors/debtors to see if there's
+/ Try ascending AND descending sorts of creditors/debtors to see if there's
   a difference in resolution
+    / The way I'm doing it, creditors must be sorted in absolute ascending
+      order. Debtors can be in any order. Why? Not entirely sure.
+        / Okay, the implementation was just wrong.
+/ Try to identify if unsafe ints are actually being used - YUP!
+- Port over to big-rational
 - Use person ids instead of person names, to make renaming people possible
 
 Thoughts

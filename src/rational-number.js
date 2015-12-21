@@ -58,6 +58,10 @@ export default class RationalNumber {
  * @returns {Object} Simplified { numerator, denominator }
  */
 function simplify(numerator, denominator) {
+    var MAX_SAFE = Math.pow(2, 53);
+    if (numerator > MAX_SAFE || denominator > MAX_SAFE) {
+        throw new Error('probably using unsafe ints');
+    }
     var commonDivisor = gcd(numerator, denominator);
 
     if (numerator < 0 !== denominator < 0) {
