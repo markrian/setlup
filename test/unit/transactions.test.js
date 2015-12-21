@@ -70,15 +70,12 @@ describe('Transactions', function () {
             transactionFromTuple('b', 20, ['b', 'c']),
         ];
         transactions.add(...someTransactions);
-        let balances = transactions.getBalances();
+        let balances = transactions.getBalances({ primitive: true });
         let expectedBalances = {
             'a': -30,
             'b': 5,
             'c': 25,
         };
-        for (let name in balances) {
-            balances[name] = balances[name].valueOf();
-        }
 
         assert.deepEqual(balances, expectedBalances);
     });
@@ -105,10 +102,9 @@ describe('Transactions', function () {
         let transaction = transactionFromTuple('a', 10, ['b']);
         transactions.add(transaction);
         var inverseTransaction = transactionFromTuple('b', 10, ['a']);
-        let resolution = transactions.getResolution();
-        let primitiveResolution = Transactions.primitiveResolution(resolution);
+        let resolution = transactions.getResolution({ primitive: true });
 
-        assert.deepEqual(primitiveResolution, [inverseTransaction]);
+        assert.deepEqual(resolution, [inverseTransaction]);
     });
 
     it('returns the minimal resolution', function () {
@@ -118,10 +114,9 @@ describe('Transactions', function () {
             { creditor: 'c', amount: 1, debtors: ['d'] },
         ];
         transactions.add(...chainOfTransactions);
-        let resolution = transactions.getResolution();
-        let primitiveResolution = Transactions.primitiveResolution(resolution);
+        let resolution = transactions.getResolution({ primitive: true });
 
-        assert.deepEqual(primitiveResolution, [{
+        assert.deepEqual(resolution, [{
             creditor: 'd', amount: 1, debtors: ['a']
         }]);
     });

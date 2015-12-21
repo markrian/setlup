@@ -30,7 +30,7 @@ class Transactions {
         return _.unique(people);
     }
 
-    getResolution() {
+    getResolution(options = {}) {
         let balances = this.getBalances();
         let debtors = [];
         let creditors = [];
@@ -65,7 +65,7 @@ class Transactions {
                 debtor.balance = debtor.balance.subtract(toPay);
                 resolvingTransactions.push({
                     creditor: debtor.name,
-                    amount: toPay,
+                    amount: options.primitive ? toPay.valueOf() : toPay,
                     debtors: [creditor.name],
                 });
             }
@@ -74,7 +74,7 @@ class Transactions {
        return resolvingTransactions;
     }
 
-    getBalances() {
+    getBalances(options = {}) {
         let balances = {};
         this.list.forEach(transaction => {
             if (!balances[transaction.creditor]) {
@@ -93,11 +93,13 @@ class Transactions {
             });
         });
 
-        return balances;
-    }
+        if (options.primitive) {
+            Object.keys(balances).forEach(key => {
+                balances[key] = balances[key].valueOf();
+            });
+        }
 
-    static primitiveResolution(resolution) {
-        return resolution.map(primitiveTransaction);
+        return balances;
     }
 
 }
@@ -105,14 +107,6 @@ class Transactions {
 
 function normalisedTransaction(transaction) {
     let amount = bigRat(transaction.amount);
-    transaction = _.cloneDeep(transaction);
-    transaction.amount = amount;
-    return transaction;
-}
-
-
-function primitiveTransaction(transaction) {
-    let amount = transaction.amount.valueOf();
     transaction = _.cloneDeep(transaction);
     transaction.amount = amount;
     return transaction;
