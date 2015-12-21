@@ -8,9 +8,7 @@ describe('RationalNumber', function () {
 
     it('can be instantiated', function () {
         let r = new RationalNumber(0, 1);
-        assert.strictEqual(r.numerator, 0);
-        assert.strictEqual(r.denominator, 1);
-        assert.strictEqual(r.valueOf(), 0);
+        assertRational(r, 0, 1);
     });
 
     it(`throws when not instantiated with 'new'`, function () {
@@ -30,9 +28,7 @@ describe('RationalNumber', function () {
 
         tests.forEach(test => {
             let r = new RationalNumber(test[0][0], test[0][1]);
-            assert.strictEqual(r.numerator, test[1][0]);
-            assert.strictEqual(r.denominator, test[1][1]);
-            assert.strictEqual(r.valueOf(), test[0][0] / test[0][1]);
+            assertRational(r, test[1][0], test[1][1]);
         });
     });
 
@@ -40,9 +36,7 @@ describe('RationalNumber', function () {
         let value = 2;
         let r = RationalNumber.fromNumber(value);
 
-        assert.strictEqual(r.numerator, value);
-        assert.strictEqual(r.denominator, 1);
-        assert.strictEqual(r.valueOf(), value);
+        assertRational(r, value, 1);
     });
 
     it('can be instantiated with a instance of RationalNumber');
