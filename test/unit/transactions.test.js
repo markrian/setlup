@@ -9,6 +9,7 @@ import {
 } from '../support/transactions-helpers';
 
 import Transactions from '../../src/transactions';
+import RationalNumber from '../../src/rational-number';
 
 
 describe('Transactions', function () {
@@ -33,6 +34,13 @@ describe('Transactions', function () {
         transactions.add(...moreTransactions);
 
         assert.deepEqual(transactions.list, [transaction, ...moreTransactions]);
+    });
+
+    it('transforms numbers into RationalNumbers', function () {
+        let transaction = makeTransaction();
+        transactions.add(transaction);
+
+        assert(transactions.list[0].amount instanceof RationalNumber);
     });
 
     it('makes copies of added transactions', function () {
