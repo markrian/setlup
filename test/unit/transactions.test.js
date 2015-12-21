@@ -127,6 +127,18 @@ describe('Transactions', function () {
         assert.isBelow(numResolvingTransactions, numPeople);
     });
 
+    // FIXME: Sometimes fails due to rounding errors!
+    describe('when applying the resolution', function () {
+        it('should make a new resolution empty', function () {
+            let someTransactions = repeat(makeTransaction, 1);
+            transactions.add(...someTransactions);
+            let resolution = transactions.getResolution();
+            transactions.add(...resolution);
+
+            assert.deepEqual(transactions.getResolution(), []);
+        });
+    });
+
     it('returns an empty resolution if all transactions are balanced', function () {
         let balancedTransactions = [
             { creditor: 'a', amount: 1, debtors: ['b'] },
