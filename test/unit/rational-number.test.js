@@ -33,10 +33,10 @@ describe('RationalNumber', function () {
     });
 
     it('can be instantiated with a number', function () {
-        let value = 2;
+        let value = 3.45;
         let r = RationalNumber.fromNumber(value);
 
-        assertRational(r, value, 1);
+        assertRational(r, 69, 20);
     });
 
     it('can be added to a regular number', function () {
