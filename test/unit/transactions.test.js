@@ -98,13 +98,9 @@ describe('Transactions', function () {
     });
 
     it('resolves one transaction to its inverse', function () {
-        let transaction = makeTransaction({numDebtors: 1});
+        let transaction = transactionFromTuple('a', 10, ['b']);
         transactions.add(transaction);
-        var inverseTransaction = {
-            creditor: transaction.debtors[0],
-            amount: transaction.amount,
-            debtors: [transaction.creditor],
-        };
+        var inverseTransaction = transactionFromTuple('b', 10, ['a']);
 
         assert.deepEqual(transactions.getResolution(), [inverseTransaction]);
     });
@@ -118,8 +114,17 @@ describe('Transactions', function () {
         transactions.add(...chainOfTransactions);
 
         assert.deepEqual(transactions.getResolution(), [{
-            creditor: 'c', amount: 1, debtors: ['a']
+            creditor: 'd', amount: 1, debtors: ['a']
         }]);
+    });
+
+    it('does not return too many resolving transactions', function () {
+        let manyTransactions = repeat(makeTransaction, 50);
+        transactions.add(...manyTransactions);
+        let numPeople = transactions.getPeople().length;
+        let numResolvingTransactions = transactions.getResolution().length;
+
+        assert.isBelow(numResolvingTransactions, numPeople);
     });
 
     it('returns an empty resolution if all transactions are balanced', function () {

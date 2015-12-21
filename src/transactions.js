@@ -41,15 +41,27 @@ class Transactions {
             return absoluteBalanceAsc(b, a);
         }
 
+        let resolvingTransactions = [];
         debtors.forEach(debtor => {
             while (debtor.balance > 0) {
-                break;
+                let creditor = _.find(creditors, c => c.balance < 0);
+                assert(creditor, 'no next creditor found; balances do not sum to zero, probably!');
+                let toPay = 0;
+                if (Math.abs(creditor.balance) > debtor.balance) {
+                    toPay = debtor.balance;
+                } else {
+                    toPay = Math.abs(creditor.balance);
+                }
+                debtor.balance -= toPay;
+                resolvingTransactions.push({
+                    creditor: debtor.name,
+                    amount: toPay,
+                    debtors: [creditor.name],
+                });
             }
        });
 
-
-        let resolvingTransactions = [];
-        return resolvingTransactions;
+       return resolvingTransactions;
     }
 
     getBalances() {
@@ -75,6 +87,11 @@ class Transactions {
         return balances;
     }
 
+}
+
+
+function assert(truthy, message) {
+    if (!truthy) throw new Error(message);
 }
 
 
