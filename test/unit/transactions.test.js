@@ -64,25 +64,19 @@ describe('Transactions', function () {
     });
 
     it('can return the balances of each person', function () {
-        let transaction = makeTransaction();
-        // use the same tx twice to make calculating expected result easier
-        transactions.add(transaction, transaction);
+        let someTransactions = [
+            transactionFromTuple('a', 45, ['a', 'b', 'c']),
+            transactionFromTuple('b', 20, ['b', 'c']),
+        ];
+        transactions.add(...someTransactions);
         let balances = transactions.getBalances();
-        let expectedCreditorBalance = -transaction.amount * 2;
+        let expectedBalances = {
+            'a': -30,
+            'b': 5,
+            'c': 25,
+        };
 
-        assert.strictEqual(balances[transaction.creditor], expectedCreditorBalance);
-
-        let people = transactions.getPeople();
-        let onlyDebtors = people.filter(person => person !== transaction.creditor);
-        let expectedDebt = transaction.amount / onlyDebtors.length * 2;
-
-        onlyDebtors.forEach((debtor, i, debtors) => {
-            assert.strictEqual(
-                balances[debtor], expectedDebt,
-                `"${debtor}" expected to have balance of ${expectedDebt},
-                but has ${balances[debtor]}. Transactions:
-                ${JSON.stringify(transactions.list, null, 2)}`);
-        });
+        assert.deepEqual(balances, expectedBalances);
     });
 
     it('returns balances which sum to zero', function () {
