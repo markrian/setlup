@@ -1,6 +1,5 @@
 import _ from 'lodash';
-
-import RationalNumber from './rational-number';
+import bigRat from 'big-rational';
 
 
 class Transactions {
@@ -66,7 +65,7 @@ class Transactions {
                 debtor.balance = debtor.balance.subtract(toPay);
                 resolvingTransactions.push({
                     creditor: debtor.name,
-                    amount: toPay.valueOf(),
+                    amount: toPay,
                     debtors: [creditor.name],
                 });
             }
@@ -79,17 +78,16 @@ class Transactions {
         let balances = {};
         this.list.forEach(transaction => {
             if (!balances[transaction.creditor]) {
-                balances[transaction.creditor] = RationalNumber.fromNumber(0);
+                balances[transaction.creditor] = bigRat();
             }
             balances[transaction.creditor] = balances[transaction.creditor]
                 .subtract(transaction.amount);
 
             let numDebtors = transaction.debtors.length;
             transaction.debtors.forEach(debtor => {
-                let partialAmount = transaction.amount.divide(
-                    RationalNumber.fromNumber(numDebtors));
+                let partialAmount = transaction.amount.divide(numDebtors);
                 if (!balances[debtor]) {
-                    balances[debtor] = RationalNumber.fromNumber(0);
+                    balances[debtor] = bigRat();
                 }
                 balances[debtor] = balances[debtor].add(partialAmount);
             });
@@ -98,15 +96,23 @@ class Transactions {
         return balances;
     }
 
+    static primitiveResolution(resolution) {
+        return resolution.map(primitiveTransaction);
+    }
+
 }
 
 
 function normalisedTransaction(transaction) {
-    if (transaction.amount instanceof RationalNumber) {
-        return transaction;
-    }
+    let amount = bigRat(transaction.amount);
+    transaction = _.cloneDeep(transaction);
+    transaction.amount = amount;
+    return transaction;
+}
 
-    let amount = RationalNumber.fromNumber(transaction.amount);
+
+function primitiveTransaction(transaction) {
+    let amount = transaction.amount.valueOf();
     transaction = _.cloneDeep(transaction);
     transaction.amount = amount;
     return transaction;

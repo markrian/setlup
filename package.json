@@ -17,6 +17,7 @@
     "mocha": "^2.2.5"
   },
   "dependencies": {
+    "big-rational": "^0.10.0",
     "lodash": "^3.10.1"
   }
 }

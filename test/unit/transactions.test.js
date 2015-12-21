@@ -1,5 +1,6 @@
 import { assert } from 'chai';
 import _ from 'lodash';
+import bigRat from 'big-rational';
 
 import {
     randomNames,
@@ -9,7 +10,6 @@ import {
 } from '../support/transactions-helpers';
 
 import Transactions from '../../src/transactions';
-import RationalNumber from '../../src/rational-number';
 
 
 describe('Transactions', function () {
@@ -105,8 +105,10 @@ describe('Transactions', function () {
         let transaction = transactionFromTuple('a', 10, ['b']);
         transactions.add(transaction);
         var inverseTransaction = transactionFromTuple('b', 10, ['a']);
+        let resolution = transactions.getResolution();
+        let primitiveResolution = Transactions.primitiveResolution(resolution);
 
-        assert.deepEqual(transactions.getResolution(), [inverseTransaction]);
+        assert.deepEqual(primitiveResolution, [inverseTransaction]);
     });
 
     it('returns the minimal resolution', function () {
@@ -116,8 +118,10 @@ describe('Transactions', function () {
             { creditor: 'c', amount: 1, debtors: ['d'] },
         ];
         transactions.add(...chainOfTransactions);
+        let resolution = transactions.getResolution();
+        let primitiveResolution = Transactions.primitiveResolution(resolution);
 
-        assert.deepEqual(transactions.getResolution(), [{
+        assert.deepEqual(primitiveResolution, [{
             creditor: 'd', amount: 1, debtors: ['a']
         }]);
     });
