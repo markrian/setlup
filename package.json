@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "test": "mocha --compilers js:babel/register test/unit",
-    "tdd": "mocha --watch --debug --reporter min --compilers js:babel/register test/unit/rational-number.test.js"
+    "tdd": "mocha --watch --debug --reporter min --compilers js:babel/register test/unit"
   },
   "author": "Mark Florian <markrian@gmail.com>",
   "license": "ISC",
