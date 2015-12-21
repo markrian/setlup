@@ -23,6 +23,7 @@ TODO
         / Okay, the implementation was just wrong.
 / Try to identify if unsafe ints are actually being used - YUP!
 / Port over to big-rational
+/ Add coverage report.
 - Use person ids instead of person names, to make renaming people possible
 
 Thoughts

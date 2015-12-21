@@ -5,7 +5,7 @@
   "main": "index.js",
   "private": true,
   "scripts": {
-    "test": "mocha --compilers js:babel/register test/unit",
+    "test": "istanbul cover _mocha -- --compilers js:babel/register test/unit",
     "tdd": "mocha --watch --debug --reporter min --compilers js:babel/register test/unit"
   },
   "author": "Mark Florian <markrian@gmail.com>",
@@ -14,6 +14,7 @@
     "babel": "^5.8.21",
     "chai": "^3.4.1",
     "chance": "~0.8.0",
+    "istanbul": "^0.4.1",
     "mocha": "^2.2.5"
   },
   "dependencies": {
