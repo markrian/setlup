@@ -30,12 +30,23 @@ class Transactions {
                 creditors.push({ name: person, balance: balances[person] });
             }
         }
-        creditors.sort(absoluteBalance);
-        debtors.sort(absoluteBalance);
+        creditors.sort(absoluteBalanceAsc);
+        debtors.sort(absoluteBalanceAsc);
 
-        function absoluteBalance(a, b) {
+        function absoluteBalanceAsc(a, b) {
             return Math.abs(b.balance) - Math.abs(a.balance);
         }
+
+        function absoluteBalanceDesc(a, b) {
+            return absoluteBalanceAsc(b, a);
+        }
+
+        debtors.forEach(debtor => {
+            while (debtor.balance > 0) {
+                break;
+            }
+       });
+
 
         let resolvingTransactions = [];
         return resolvingTransactions;
