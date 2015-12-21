@@ -7,17 +7,18 @@ TODO
 / babel build it
 / write a dummy test
 / set up karma, or equivalent
-- start writing setlup code via TDD
-- use old trip-expenses for actual logic
-    - split up into modules, if appropriate
-    - write tests for each module
-    - write tests for wrapper I'll write
-- Try ascending AND descending sorts of creditors/debtors to see if there's
-  a difference in resolution
+/ start writing setlup code via TDD
+/ use old trip-expenses for actual logic
+    / split up into modules, if appropriate
+    / write tests for each module
+    / write tests for wrapper I'll write
 / Write RationalNumber class
     / Write add, subtract, divide and multiply methods
     / add \_checkType private function - must be number or RationalNumber
-- Port Transactions to use RationalNumber
+/ Port Transactions to use RationalNumber
+- Try ascending AND descending sorts of creditors/debtors to see if there's
+  a difference in resolution
+- Use person ids instead of person names, to make renaming people possible
 
 Thoughts
 --------
