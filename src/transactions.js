@@ -10,8 +10,8 @@ class Transactions {
     }
 
     add(...transactions) {
-        let _transactions = transactions.map(normalisedTransaction);
-        this.list.push(..._transactions);
+        let normalisedTransactions = transactions.map(normalisedTransaction);
+        this.list.push(...normalisedTransactions);
     }
 
     getPrimitiveList() {
