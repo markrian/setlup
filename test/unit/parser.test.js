@@ -18,4 +18,9 @@ describe('parser', function () {
         assert.deepEqual(parseLine('gary spent 400 for peter, mike, lucy'),
             { creditor: 'gary', amount: 400, debtors: ['peter', 'mike', 'lucy'] });
     });
+
+    it('can parse a simple line with a misleadingly named creditor', function () {
+        assert.deepEqual(parseLine('fordspenth spent 114.20'),
+            { creditor: 'fordspenth', amount: 114.2, debtors: ['*'] });
+    });
 });

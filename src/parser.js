@@ -1,6 +1,6 @@
 export function parseLine(line) {
-    const spent = 'spent';
-    const for_ = 'for';
+    const spent = ' spent ';
+    const for_ = ' for ';
 
     const spentPos = line.indexOf(spent);
     const creditor = line.slice(0, spentPos).trim();
