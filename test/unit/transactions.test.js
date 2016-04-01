@@ -113,6 +113,20 @@ describe('Transactions', function () {
         assert.deepEqual(transactions.getResolution(), []);
     });
 
+    it('should ignore duplicate debtors in a transaction', function () {
+        transactions.add(transactionFromTuple('a', 10, ['b', 'c', 'b']));
+        assert.deepEqual(transactions.getPeople(), ['a', 'b', 'c']);
+        assert.deepEqual(transactions.getBalances({ primitive: true }), {
+            'a': -10,
+            'b': 5,
+            'c': 5,
+        });
+        assert.deepEqual(transactions.getResolution(), [
+            transactionFromTuple('b', 5, ['a']),
+            transactionFromTuple('c', 5, ['a']),
+        ]);
+    });
+
     it('should return the same number of balances as there are people', function () {
         let transaction = makeTransaction();
         transactions.add(transaction);
