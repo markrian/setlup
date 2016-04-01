@@ -67,6 +67,10 @@ describe('Transactions', function () {
         transactions.add(...someTransactions);
 
         assert.deepEqual(transactions.getPeople(), ['a', 'b']);
+        assert.deepEqual(transactions.getBalances({ primitive: true }), {
+            'a': -25,
+            'b': 25,
+        });
         assert.deepEqual(transactions.getResolution({ primitive: true }), [
             transactionFromTuple('b', 25, ['a'])
         ]);
