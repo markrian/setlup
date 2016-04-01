@@ -25,7 +25,9 @@ class Transactions {
     getPeople() {
         let people = [];
         this.list.forEach(transaction => {
-            people.push(transaction.creditor, ...transaction.debtors);
+            let debtors = transaction.debtors;
+            if (_.contains(debtors, '*')) debtors = [];
+            people.push(transaction.creditor, ...debtors);
         })
         return _.unique(people);
     }

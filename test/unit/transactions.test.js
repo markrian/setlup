@@ -59,6 +59,16 @@ describe('Transactions', function () {
         assert.deepEqual(actual, expected);
     });
 
+    it('interprets * in debtors to mean all people involved in all transactions', function () {
+        let someTransactions = [
+            transactionFromTuple('a', 100, ['*']),
+            transactionFromTuple('b', 50, ['*']),
+        ];
+        transactions.add(...someTransactions);
+
+        assert.deepEqual(transactions.getPeople(), ['a', 'b']);
+    });
+
     it('resolves to empty list without any transactions', function () {
         let resolution = transactions.getResolution();
         assert.deepEqual(resolution, []);
