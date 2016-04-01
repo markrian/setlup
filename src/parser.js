@@ -12,5 +12,9 @@ export function parseLine(line) {
         debtors = line.slice(forPos + for_.length).split(',').map(d => d.trim());
     }
 
-    return { creditor, amount, debtors }
+    if (creditor && debtors.length && !isNaN(amount)) {
+        return { creditor, amount, debtors }
+    } else {
+        throw new Error('Parsing error');
+    }
 }

@@ -9,6 +9,12 @@ describe('parser', function () {
             { creditor: 'gary', amount: 114.2, debtors: ['*'] });
     });
 
+    it('it throws an error on a malformed line', function () {
+        assert.throws(function () {
+            parseLine('nonsense goes here, foo');
+        }, 'Parsing error');
+    });
+
     it('can parse a simple line with excess whitespace', function () {
         assert.deepEqual(parseLine('  gary   spent   114.20  '),
             { creditor: 'gary', amount: 114.2, debtors: ['*'] });
