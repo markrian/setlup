@@ -15,6 +15,6 @@ export function parseLine(line) {
     if (creditor && debtors.length && !isNaN(amount)) {
         return { creditor, amount, debtors }
     } else {
-        throw new Error('Parsing error');
+        throw new Error(`Parsing error: "${line}" is invalid`);
     }
 }
