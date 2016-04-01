@@ -67,6 +67,9 @@ describe('Transactions', function () {
         transactions.add(...someTransactions);
 
         assert.deepEqual(transactions.getPeople(), ['a', 'b']);
+        assert.deepEqual(transactions.getResolution({ primitive: true }), [
+            transactionFromTuple('b', 25, ['a'])
+        ]);
     });
 
     it('resolves to empty list without any transactions', function () {
