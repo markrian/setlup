@@ -2,7 +2,9 @@ var setlup = require('setlup');
 
 var resultsEl = document.querySelector('#results');
 
-document.querySelector('textarea').addEventListener('input', function () {
+var textarea = document.querySelector('textarea');
+
+textarea.addEventListener('input', function () {
     try {
         var resolvingTransactions = resultsFromTextarea(this);
     } catch (e) {
@@ -12,6 +14,8 @@ document.querySelector('textarea').addEventListener('input', function () {
 
     resultsEl.innerHTML = resolvingTransactions.map(englishTransaction).join('<br>');
 });
+
+textarea.dispatchEvent(new Event('input'));
 
 function resultsFromTextarea(textarea) {
     var items = [];
