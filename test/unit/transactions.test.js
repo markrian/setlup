@@ -106,6 +106,13 @@ describe('Transactions', function () {
         assert.strictEqual(balancesSum.valueOf(), 0);
     });
 
+    it(`doesn't charge debtors when the only debtor is the creditor`, function () {
+        transactions.add(transactionFromTuple('a', 40, ['a']));
+        assert.deepEqual(transactions.getPeople(), ['a']);
+        assert.deepEqual(transactions.getBalances({ primitive: true }), { 'a': 0 });
+        assert.deepEqual(transactions.getResolution(), []);
+    });
+
     it('should return the same number of balances as there are people', function () {
         let transaction = makeTransaction();
         transactions.add(transaction);
