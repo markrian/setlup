@@ -78,6 +78,7 @@ class Transactions {
 
     getBalances(options = {}) {
         let balances = {};
+        const people = this.getPeople();
         this.list.forEach(transaction => {
             if (!balances[transaction.creditor]) {
                 balances[transaction.creditor] = bigRat();
@@ -85,9 +86,14 @@ class Transactions {
             balances[transaction.creditor] = balances[transaction.creditor]
                 .subtract(transaction.amount);
 
-            let numDebtors = transaction.debtors.length;
-            transaction.debtors.forEach(debtor => {
-                let partialAmount = transaction.amount.divide(numDebtors);
+            let debtors;
+            if (_.contains(transaction.debtors, '*')) {
+                debtors = people;
+            } else {
+                debtors = transaction.debtors;
+            }
+            debtors.forEach(debtor => {
+                let partialAmount = transaction.amount.divide(debtors.length);
                 if (!balances[debtor]) {
                     balances[debtor] = bigRat();
                 }
