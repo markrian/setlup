@@ -1,4 +1,5 @@
-var setlup = require('setlup');
+import { parseLine } from '../src/parser';
+import Transactions from '../src/transactions';
 
 var resultsEl = document.querySelector('#results');
 
@@ -22,11 +23,11 @@ function resultsFromTextarea(textarea) {
     textarea.value.split('\n').forEach(function (line, index) {
         line = line.trim();
         if (!line) return;
-        items.push(setlup.parser.parseLine(line));
+        items.push(parseLine(line));
     });
 
 
-    var transactions = new setlup.Transactions();
+    var transactions = new Transactions();
     transactions.add.apply(transactions, items);
     return transactions.getResolution({ primitive: true });
 }

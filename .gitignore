@@ -3,3 +3,5 @@ npm-debug.log
 public
 coverage
 build
+dist
+.cache
