@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import uniq from 'lodash/uniq';
 import bigRat from 'big-rational';
 
 import {
@@ -47,8 +47,8 @@ describe('Transactions', function () {
     test('can list the people involved in all transactions', function () {
         let someTransactions = repeat(makeTransaction, 2);
         transactions.add(...someTransactions);
-        let actual = _.uniq(transactions.getPeople().sort());
-        let expected = _.uniq([
+        let actual = uniq(transactions.getPeople().sort());
+        let expected = uniq([
             someTransactions[0].creditor,
             someTransactions[1].creditor,
             ...someTransactions[0].debtors,

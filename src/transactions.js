@@ -1,4 +1,7 @@
-import _ from 'lodash';
+import cloneDeep from 'lodash/cloneDeep';
+import find from 'lodash/find';
+import includes from 'lodash/includes';
+import uniq from 'lodash/uniq';
 import bigRat from 'big-rational';
 
 
@@ -16,7 +19,7 @@ class Transactions {
     getPrimitiveList() {
         return this.list.map(transaction => {
             var primitiveAmount = transaction.amount.valueOf();
-            transaction = _.cloneDeep(transaction);
+            transaction = cloneDeep(transaction);
             transaction.amount = primitiveAmount;
             return transaction;
         });
@@ -26,10 +29,10 @@ class Transactions {
         let people = [];
         this.list.forEach(transaction => {
             let debtors = transaction.debtors;
-            if (_.includes(debtors, '*')) debtors = [];
+            if (includes(debtors, '*')) debtors = [];
             people.push(transaction.creditor, ...debtors);
         })
-        return _.uniq(people);
+        return uniq(people);
     }
 
     getResolution(options = {}) {
@@ -55,7 +58,7 @@ class Transactions {
         let resolvingTransactions = [];
         debtors.forEach(debtor => {
             while (debtor.balance > 0) {
-                let creditor = _.find(creditors, c => c.balance < 0);
+                let creditor = find(creditors, c => c.balance < 0);
                 assert(creditor, 'no next creditor found, probably due to rounding error!');
                 let toPay;
                 if (Math.abs(creditor.balance) > debtor.balance) {
@@ -87,7 +90,7 @@ class Transactions {
                 .subtract(transaction.amount);
 
             let debtors;
-            if (_.includes(transaction.debtors, '*')) {
+            if (includes(transaction.debtors, '*')) {
                 debtors = people;
             } else {
                 debtors = transaction.debtors;
@@ -115,7 +118,7 @@ class Transactions {
 
 function normalisedTransaction(transaction) {
     let amount = bigRat(transaction.amount);
-    transaction = _.cloneDeep(transaction);
+    transaction = cloneDeep(transaction);
     transaction.amount = amount;
     return transaction;
 }
