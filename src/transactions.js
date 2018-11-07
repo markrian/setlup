@@ -26,10 +26,10 @@ class Transactions {
         let people = [];
         this.list.forEach(transaction => {
             let debtors = transaction.debtors;
-            if (_.contains(debtors, '*')) debtors = [];
+            if (_.includes(debtors, '*')) debtors = [];
             people.push(transaction.creditor, ...debtors);
         })
-        return _.unique(people);
+        return _.uniq(people);
     }
 
     getResolution(options = {}) {
@@ -87,7 +87,7 @@ class Transactions {
                 .subtract(transaction.amount);
 
             let debtors;
-            if (_.contains(transaction.debtors, '*')) {
+            if (_.includes(transaction.debtors, '*')) {
                 debtors = people;
             } else {
                 debtors = transaction.debtors;

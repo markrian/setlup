@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import chance from '../support/chance';
 
-const NAMES = _.unique(repeat(chance.name.bind(chance), 20));
+const NAMES = _.uniq(repeat(chance.name.bind(chance), 20));
 
 
 function randomNames(count = 10) {

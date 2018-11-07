@@ -47,8 +47,8 @@ describe('Transactions', function () {
     test('can list the people involved in all transactions', function () {
         let someTransactions = repeat(makeTransaction, 2);
         transactions.add(...someTransactions);
-        let actual = _.unique(transactions.getPeople().sort());
-        let expected = _.unique([
+        let actual = _.uniq(transactions.getPeople().sort());
+        let expected = _.uniq([
             someTransactions[0].creditor,
             someTransactions[1].creditor,
             ...someTransactions[0].debtors,
