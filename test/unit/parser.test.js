@@ -1,32 +1,30 @@
-import { assert } from 'chai';
-
 import { parseLine } from '../../src/parser';
 
 
 describe('parser', function () {
-    it('can parse a simple line', function () {
-        assert.deepEqual(parseLine('gary spent 114.20'),
+    test('can parse a simple line', function () {
+        expect(parseLine('gary spent 114.20')).toEqual(
             { creditor: 'gary', amount: 114.2, debtors: ['*'] });
     });
 
-    it('it throws an error on a malformed line', function () {
-        assert.throws(function () {
+    test('it throws an error on a malformed line', function () {
+        expect(function () {
             parseLine('nonsense goes here, foo');
-        }, 'Parsing error');
+        }).toThrow('Parsing error');
     });
 
-    it('can parse a simple line with excess whitespace', function () {
-        assert.deepEqual(parseLine('  gary   spent   114.20  '),
+    test('can parse a simple line with excess whitespace', function () {
+        expect(parseLine('  gary   spent   114.20  ')).toEqual(
             { creditor: 'gary', amount: 114.2, debtors: ['*'] });
     });
 
-    it('can parse a simple line with debtors', function () {
-        assert.deepEqual(parseLine('gary spent 400 for peter, mike, lucy'),
+    test('can parse a simple line with debtors', function () {
+        expect(parseLine('gary spent 400 for peter, mike, lucy')).toEqual(
             { creditor: 'gary', amount: 400, debtors: ['peter', 'mike', 'lucy'] });
     });
 
-    it('can parse a simple line with a misleadingly named creditor', function () {
-        assert.deepEqual(parseLine('fordspenth spent 114.20'),
+    test('can parse a simple line with a misleadingly named creditor', function () {
+        expect(parseLine('fordspenth spent 114.20')).toEqual(
             { creditor: 'fordspenth', amount: 114.2, debtors: ['*'] });
     });
 });
