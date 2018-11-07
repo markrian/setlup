@@ -27,4 +27,9 @@ describe('parser', function () {
         expect(parseLine('fordspenth spent 114.20')).toEqual(
             { creditor: 'fordspenth', amount: 114.2, debtors: ['*'] });
     });
+
+    test('should ignore duplicate debtors', function () {
+        expect(parseLine('foo spent 10 for bar, qux, bar')).toEqual(
+            { creditor: 'foo', amount: 10, debtors: ['bar', 'qux'] });
+    });
 });

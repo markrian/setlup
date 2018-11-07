@@ -112,20 +112,6 @@ describe('Transactions', function () {
         expect(transactions.getResolution()).toEqual([]);
     });
 
-    test('should ignore duplicate debtors in a transaction', function () {
-        transactions.add(transactionFromTuple('a', 10, ['b', 'c', 'b']));
-        expect(transactions.getPeople()).toEqual(['a', 'b', 'c']);
-        expect(transactions.getBalances({ primitive: true })).toEqual({
-            'a': -10,
-            'b': 5,
-            'c': 5,
-        });
-        expect(transactions.getResolution()).toEqual([
-            transactionFromTuple('b', 5, ['a']),
-            transactionFromTuple('c', 5, ['a']),
-        ]);
-    });
-
     test('should return the same number of balances as there are people', function () {
         let transaction = makeTransaction();
         transactions.add(transaction);

@@ -1,3 +1,5 @@
+import uniq from 'lodash/uniq';
+
 export function parseLine(line) {
     const spent = ' spent ';
     const for_ = ' for ';
@@ -9,7 +11,7 @@ export function parseLine(line) {
     const forPos = line.indexOf(for_);
     let debtors = ['*'];
     if (forPos > -1) {
-        debtors = line.slice(forPos + for_.length).split(',').map(d => d.trim());
+        debtors = uniq(line.slice(forPos + for_.length).split(',').map(d => d.trim()));
     }
 
     if (creditor && debtors.length && !isNaN(amount)) {
