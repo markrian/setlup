@@ -1,8 +1,8 @@
-import { toHash, fromHash } from '../../src/hash';
+import { toShortString, fromShortString } from '../../src/short-string';
 import { transactionFromTuple as txn } from '../support/transactions-helpers';
 
 
-describe('toHash', function () {
+describe('toShortString', function () {
     const tests = [{
         description: 'should handle no transactions',
         transactions: [],
@@ -28,13 +28,13 @@ describe('toHash', function () {
     tests.forEach(({ description, transactions, expected, skip }) => {
         const testFn = skip ? test.skip : test;
         testFn(description, () => {
-            expect(toHash(transactions)).toEqual(expected);
+            expect(toShortString(transactions)).toEqual(expected);
         });
     });
 });
 
 
-describe('fromHash', function () {
+describe('fromShortString', function () {
     const tests = [{
         description: 'should handle empty hash',
         hash: '',
@@ -55,7 +55,7 @@ describe('fromHash', function () {
     tests.forEach(({ description, hash, expected, skip }) => {
         const testFn = skip ? test.skip : test;
         testFn(description, () => {
-            expect(fromHash(hash)).toEqual(expected);
+            expect(fromShortString(hash)).toEqual(expected);
         });
     });
 });
@@ -69,7 +69,7 @@ describe('roundtrip', function () {
 
     hashes.forEach(hash => {
         test('roundtrip ' + hash, () => {
-            expect(toHash(fromHash(hash))).toEqual(hash);
+            expect(toShortString(fromShortString(hash))).toEqual(hash);
         });
     });
 
@@ -83,7 +83,7 @@ describe('roundtrip', function () {
 
     transactions.forEach(txns => {
         test('roundtrip ' + JSON.stringify(txns), () => {
-            expect(fromHash(toHash(txns))).toEqual(txns);
+            expect(fromShortString(toShortString(txns))).toEqual(txns);
         });
     });
 });

@@ -1,7 +1,7 @@
 // import uniq from 'lodash/uniq';
 import Transactions from './transactions';
 
-export function toHash(transactions) {
+export function toShortString(transactions) {
     if (transactions.length === 0) {
         return '';
     }
@@ -32,7 +32,7 @@ function transactionToString(transaction, people) {
     ].join(',');
 }
 
-export function fromHash(hash) {
+export function fromShortString(hash) {
     if (hash.length === 0) {
         return [];
     }
