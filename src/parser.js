@@ -6,7 +6,7 @@ export function parseLine(line) {
 
     const spentPos = line.indexOf(spent);
     if (spentPos === -1) {
-        throwParsingError();
+        throwParsingError(line);
     }
 
     const creditor = normaliseName(line.slice(0, spentPos).trim());
@@ -21,7 +21,7 @@ export function parseLine(line) {
     if (creditor && debtors.length && !isNaN(amount)) {
         return { creditor, amount, debtors: debtors.map(normaliseName) }
     } else {
-        throwParsingError();
+        throwParsingError(line);
     }
 }
 
