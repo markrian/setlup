@@ -1,28 +1,37 @@
 import uniq from 'lodash/uniq';
 
-export function parseLine(line) {
-    const spent = ' spent ';
-    const for_ = ' for ';
-
-    const spentPos = line.indexOf(spent);
-    if (spentPos === -1) {
+export function parseLine(line, position = 0) {
+    const cleanLine = line.toLowerCase().trim().replace(/\s+/g, ' ');
+    const [creditor, rest] = cleanLine.split(' spent ');
+    if (rest === undefined) {
         throwParsingError(line);
     }
 
-    const creditor = normaliseName(line.slice(0, spentPos).trim());
-    const amount = parseFloat(line.slice(spentPos + spent.length));
-
-    const forPos = line.indexOf(for_);
-    let debtors = ['*'];
-    if (forPos > -1) {
-        debtors = uniq(line.slice(forPos + for_.length).split(',').map(d => d.trim()));
+    let endOfAmount = rest.indexOf(' ');
+    if (endOfAmount === -1) {
+        endOfAmount = rest.length;
     }
 
-    if (creditor && debtors.length && !isNaN(amount)) {
-        return { creditor, amount, debtors: debtors.map(normaliseName) }
-    } else {
+    const amount = Number(rest.slice(0, endOfAmount));
+    if (typeof amount !== 'number' || !isFinite(amount)) {
         throwParsingError(line);
     }
+
+    const debtors = rest
+        .slice(endOfAmount)
+        .replace(/for /, '')
+        .split(',')
+        .filter(s => s.length > 0);
+
+    if (debtors.length === 0) {
+        debtors.push('*');
+    }
+
+    return {
+        creditor: normaliseName(creditor),
+        amount,
+        debtors: uniq(debtors).map(normaliseName),
+    };
 }
 
 function throwParsingError(line) {
