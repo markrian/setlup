@@ -24,7 +24,10 @@ TODO
 / Try to identify if unsafe ints are actually being used - YUP!
 / Port over to big-rational
 / Add coverage report.
-- Use person ids instead of person names, to make renaming people possible
+X Use person ids instead of person names, to make renaming people possible
+- Implement linking via hash
+    - Come up with shortened version of data to put in fragment
+- Implement commenting with #
 
 Thoughts
 --------
