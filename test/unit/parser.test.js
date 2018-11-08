@@ -43,4 +43,10 @@ describe('parser', function () {
         expect(parseLine('foo spent 10 for Foo, qux  yo, BAZ-FOO man')).toEqual(
             { creditor: 'Foo', amount: 10, debtors: ['Foo', 'Qux Yo', 'Baz-Foo Man']});
     });
+
+    test.skip('should throw on invalid number', function () {
+        expect(function () {
+            parseLine('a spent 4xyz');
+        }).toThrow('Parsing error');
+    });
 });
