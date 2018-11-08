@@ -13,6 +13,12 @@ describe('parser', function () {
         }).toThrow('Parsing error');
     });
 
+    test('it throws an error on a malformed line', function () {
+        expect(function () {
+            parseLine('a did 4');
+        }).toThrow('Parsing error');
+    });
+
     test('can parse a simple line with excess whitespace', function () {
         expect(parseLine('  gary   spent   114.20  ')).toEqual(
             { creditor: 'gary', amount: 114.2, debtors: ['*'] });
