@@ -1,6 +1,7 @@
 import { parseLine } from '../src/parser';
 import Transactions from '../src/transactions';
 import registerSW from './register-sw';
+import { fromHash, toHash } from '../src/hash';
 
 registerSW();
 
@@ -11,6 +12,8 @@ const textarea = document.querySelector('textarea');
 textarea.addEventListener('input', function () {
     const results = resultsFromTextarea(this);
     resultsEl.innerHTML = renderResults(results);
+    const hash = toHasH(results.transactions);
+    location.hash = hash;
 });
 
 textarea.dispatchEvent(new Event('input'));
