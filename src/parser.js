@@ -5,7 +5,11 @@ export function parseLine(line) {
     const for_ = ' for ';
 
     const spentPos = line.indexOf(spent);
-    const creditor = line.slice(0, spentPos).trim();
+    if (spentPos === -1) {
+        throwParsingError();
+    }
+
+    const creditor = normaliseName(line.slice(0, spentPos).trim());
     const amount = parseFloat(line.slice(spentPos + spent.length));
 
     const forPos = line.indexOf(for_);
@@ -15,8 +19,30 @@ export function parseLine(line) {
     }
 
     if (creditor && debtors.length && !isNaN(amount)) {
-        return { creditor, amount, debtors }
+        return { creditor, amount, debtors: debtors.map(normaliseName) }
     } else {
-        throw new Error(`Parsing error: "${line}" is invalid`);
+        throwParsingError();
     }
+}
+
+function throwParsingError(line) {
+    throw new Error(`Parsing error: "${line}" is invalid`);
+}
+
+function normaliseName(name) {
+    return name
+        .trim()
+        .replace(/\s+/g, ' ')
+        .split(' ')
+        .map(part =>
+            part
+                .split('-')
+                .map(titleCase)
+                .join('-')
+        )
+        .join(' ');
+}
+
+function titleCase(string) {
+    return string.slice(0, 1).toUpperCase() + string.slice(1).toLowerCase();
 }
