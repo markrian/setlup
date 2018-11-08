@@ -1,7 +1,7 @@
 import uniq from 'lodash/uniq';
 
 export function parseLine(line, position = 0) {
-    const cleanLine = line.toLowerCase().trim().replace(/\s+/g, ' ');
+    const cleanLine = clean(line);
     const [creditor, rest] = cleanLine.split(' spent ');
     if (rest === undefined) {
         throwParsingError(line);
@@ -54,4 +54,12 @@ function normaliseName(name) {
 
 function titleCase(string) {
     return string.slice(0, 1).toUpperCase() + string.slice(1).toLowerCase();
+}
+
+function clean(line) {
+    let cleaned = line.toLowerCase().trim().replace(/\s+/g, ' ');
+    let comment = cleaned.indexOf('#');
+    return comment > -1 ?
+        cleaned.slice(0, comment) :
+        cleaned;
 }

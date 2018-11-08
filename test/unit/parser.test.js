@@ -26,6 +26,10 @@ describe('parser', function () {
         description: `should normalise peoples' names`,
         line: 'foo spent 10 for Foo, qux  yo, BAZ-FOO man',
         expected: { creditor: 'Foo', amount: 10, debtors: ['Foo', 'Qux Yo', 'Baz-Foo Man']},
+    }, {
+        description: 'should ignore everything after a # character',
+        line: 'foo spent 10 for Foo, qux # yo, BAZ-FOO man',
+        expected: { creditor: 'Foo', amount: 10, debtors: ['Foo', 'Qux']},
     }];
 
     validLines.forEach(({ description, line, expected }) => {
@@ -38,6 +42,7 @@ describe('parser', function () {
         ['nonsense', 'nonsense goes here, foo'],
         ['no spent keyword', 'a did 4'],
         ['invalid number', 'a spent 4xyz'],
+        ['entirely commented out', '#a spent 10'],
     ];
 
     invalidLines.forEach(([description, line]) => {
