@@ -182,4 +182,15 @@ describe('Transactions', function () {
         expect(transactions.getResolution()).toEqual([]);
     });
 
+    test('can be stringified', function () {
+        let someTransactions = [
+            transactionFromTuple('Foo', 100, ['*']),
+            transactionFromTuple('Bar Qux', 50, ['Foo', 'Whoever']),
+        ];
+        transactions.add(...someTransactions);
+        expect(transactions.toString()).toEqual([
+            'Foo spent 100',
+            'Bar Qux spent 50 for Foo, Whoever',
+        ].join('\n'));
+    });
 });

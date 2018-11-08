@@ -16,7 +16,7 @@ class Transactions {
     }
 
     add(...transactions) {
-        let normalisedTransactions = transactions.map(normalisedTransaction);
+        let normalisedTransactions = transactions.map(Transaction.from);
         this.list.push(...normalisedTransactions);
     }
 
@@ -117,14 +117,36 @@ class Transactions {
         return balances;
     }
 
+    toString() {
+        return this.list.map(txn => txn.toString()).join('\n');
+    }
 }
 
 
-function normalisedTransaction(transaction) {
-    let amount = bigRat(transaction.amount);
-    transaction = cloneDeep(transaction);
-    transaction.amount = amount;
-    return transaction;
+class Transaction {
+    constructor(creditor, amount, debtors) {
+        this.creditor = creditor;
+        this.amount = amount;
+        this.debtors = debtors;
+    }
+
+    static from(object) {
+        return new Transaction(
+            object.creditor,
+            bigRat(object.amount),
+            cloneDeep(object.debtors),
+        );
+    }
+
+    toString() {
+        const { creditor, amount, debtors: rawDebtors } = this;
+        let forDebtors = '';
+        if (rawDebtors[0] !== '*') {
+            forDebtors = ' for ' + rawDebtors.join(', ');
+        }
+
+        return `${creditor} spent ${amount.valueOf()}${forDebtors}`;
+    }
 }
 
 
