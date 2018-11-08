@@ -10,7 +10,7 @@ describe('toHash', function () {
     }, {
         description: 'should handle a simple transaction',
         transactions: [txn('bob', 10, ['*'])],
-        expected: 'bob:0,10,*',
+        expected: 'bob:0,10',
     }, {
         description: 'should handle a simple transaction with named debtors',
         transactions: [txn('bob', 10, ['alice', 'charlie'])],
@@ -41,11 +41,11 @@ describe('fromHash', function () {
         expected: [],
     }, {
         description: 'should handle a simple transaction',
-        hash: 'bob:0,10,*',
+        hash: 'bob:0,10',
         expected: [txn('bob', 10, ['*'])],
     }, {
         description: 'should handle multiple transactions',
-        hash: 'foo,bar,qux:0,10,2:1,100,*',
+        hash: 'foo,bar,qux:0,10,2:1,100',
         expected: [
             txn('foo', 10, ['qux']),
             txn('bar', 100, ['*']),
@@ -63,8 +63,8 @@ describe('fromHash', function () {
 
 describe('roundtrip', function () {
     const hashes = [
-        'bob:0,1,*',
-        'Foo Bar,Baz!:0,100,*:1,100,0',
+        'bob:0,1',
+        'Foo Bar,Baz!:0,100:1,100,0',
     ];
 
     hashes.forEach(hash => {

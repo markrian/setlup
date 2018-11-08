@@ -21,7 +21,7 @@ function transactionToString(transaction, people) {
     const creditorIndex = people.indexOf(transaction.creditor);
     let debtorIndices;
     if (isEveryone(transaction.debtors)) {
-        debtorIndices = ['*']
+        debtorIndices = []
     } else {
         debtorIndices = transaction.debtors.map(debtor => people.indexOf(debtor));
     }
@@ -44,7 +44,7 @@ export function fromHash(hash) {
         const rawDebtors = parts.slice(2);
         let debtors;
 
-        if (isEveryone(rawDebtors)) {
+        if (rawDebtors.length === 0) {
             debtors = ['*'];
         } else {
             debtors = rawDebtors.map(i => people[i]);
