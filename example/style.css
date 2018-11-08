@@ -1,0 +1,32 @@
+:root {
+    --grey: #eee;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+textarea {
+    flex: 1 0 0;
+    padding: 0.5rem 1rem;
+    margin: 0;
+    border: 0;
+    background-color: var(--grey);
+    resize: none;
+}
+
+#results {
+    flex: 1 0 0;
+    padding: 0.5rem 1rem;
+    overflow: auto;
+}
