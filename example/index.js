@@ -13,7 +13,7 @@ textarea.addEventListener('input', function () {
         return;
     }
 
-    resultsEl.innerHTML = resolvingTransactions.map(englishTransaction).join('<br>');
+    resultsEl.innerHTML = renderResolvingTransactions(resolvingTransactions);
 });
 
 textarea.dispatchEvent(new Event('input'));
@@ -39,4 +39,13 @@ function englishTransaction(transaction) {
         transaction.debtors[0],
         transaction.amount.toFixed(2),
     ].join(' ');
+}
+
+function renderResolvingTransactions(transactions) {
+    if (transactions.length === 0) {
+        return "Nothing owed!";
+    }
+
+    const items = transactions.map(tx => `<li>${englishTransaction(tx)}</li>`);
+    return `<ul>${items.join('')}</ul>`;
 }

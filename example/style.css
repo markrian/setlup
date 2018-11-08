@@ -18,7 +18,7 @@ body {
 
 textarea {
     flex: 1 0 0;
-    padding: 0.5rem 1rem;
+    padding: 0.7rem 1rem;
     margin: 0;
     border: 0;
     background-color: var(--grey);
@@ -27,6 +27,12 @@ textarea {
 
 #results {
     flex: 1 0 0;
-    padding: 0.5rem 1rem;
+    padding: 0.7rem 1rem;
     overflow: auto;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
 }
