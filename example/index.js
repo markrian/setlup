@@ -9,10 +9,12 @@ const resultsEl = document.querySelector('#results');
 
 const textarea = document.querySelector('textarea');
 
+const transactions = new Transactions();
+
 textarea.addEventListener('input', function () {
     const results = resultsFromTextarea(this);
     resultsEl.innerHTML = renderResults(results);
-    const hash = toHasH(results.transactions);
+    const hash = toHash(results.transactions);
     location.hash = hash;
 });
 
@@ -35,7 +37,7 @@ function resultsFromTextarea(textarea) {
         return results;
     }, { errors: [], transactions: [], resolution: [] });
 
-    const transactions = new Transactions();
+    transactions.reset();
     transactions.add(...results.transactions);
     results.resolution.push(...transactions.getResolution({ primitive: true }));
     return results;

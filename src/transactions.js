@@ -8,6 +8,10 @@ import bigRat from 'big-rational';
 class Transactions {
 
     constructor() {
+        this.reset();
+    }
+
+    reset() {
         this.list = [];
     }
 
