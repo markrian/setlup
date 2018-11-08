@@ -18,6 +18,7 @@ textarea.addEventListener('input', function () {
     location.hash = hash;
 });
 
+readFromHash();
 textarea.dispatchEvent(new Event('input'));
 
 function resultsFromTextarea(textarea) {
@@ -65,4 +66,14 @@ function renderResults({ errors, resolution }) {
 
 function renderListItems(items, className = '') {
     return items.map(item => `<li class="${className}">${item}</li>`).join('');
+}
+
+function readFromHash(hash = decodeURIComponent(location.hash.slice(1))) {
+    if (hash.length === 0) {
+        return;
+    }
+    transactions.reset();
+    transactions.add(...fromHash(hash));
+    const string = transactions.toString();
+    textarea.value = string;
 }
