@@ -1,5 +1,8 @@
 import { parseLine } from '../src/parser';
 import Transactions from '../src/transactions';
+import registerSW from './register-sw';
+
+registerSW();
 
 const resultsEl = document.querySelector('#results');
 
