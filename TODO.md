@@ -25,9 +25,12 @@ TODO
 / Port over to big-rational
 / Add coverage report.
 X Use person ids instead of person names, to make renaming people possible
-- Implement linking via hash
-    - Come up with shortened version of data to put in fragment
+/ Implement linking via hash
+    / Come up with shortened version of data to put in fragment
+- Add "for" or "description" property on transactions, e.g., "bob spent 10 on
+  petrol"
 - Implement commenting with #
+- Preserve comments in location hash?
 
 Thoughts
 --------
