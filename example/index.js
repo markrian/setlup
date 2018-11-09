@@ -1,7 +1,7 @@
 import { parseLine } from '../src/parser';
 import Transactions from '../src/transactions';
 import registerSW from './register-sw';
-import { fromHash, toHash } from '../src/hash';
+import { fromShortString, toShortString } from '../src/short-string';
 
 registerSW();
 
@@ -14,7 +14,7 @@ const transactions = new Transactions();
 textarea.addEventListener('input', function () {
     const results = resultsFromTextarea(this);
     resultsEl.innerHTML = renderResults(results);
-    const hash = toHash(results.transactions);
+    const hash = toShortString(results.transactions);
     location.hash = hash;
 });
 
@@ -73,7 +73,7 @@ function readFromHash(hash = decodeURIComponent(location.hash.slice(1))) {
         return;
     }
     transactions.reset();
-    transactions.add(...fromHash(hash));
+    transactions.add(...fromShortString(hash));
     const string = transactions.toString();
     textarea.value = string;
 }
